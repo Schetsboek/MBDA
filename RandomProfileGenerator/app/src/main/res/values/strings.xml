@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Random Profile Generator</string>
+    <string name="generate_profiles">Generate profiles!</string>
+    <string name="random_profiles">Random profiles</string>
+    <string name="favorite_profiles">Favorite profiles</string>
+    <string name="view_favorite_profiles">View favorite profiles!</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="name">Name</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="no_gender">Other</string>
+    <string name="name_label">Hi, my name is</string>
+    <string name="gender_label">I am a</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="save_profile">Save profile</string>
+    <string name="favorite">Favorite</string>
+    <string name="notfavorite">Not favorite</string>
+</resources>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileEditFragment">
+
+    <ImageView
+        android:id="@+id/profile_picture"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_width="128sp"
+        android:layout_height="128sp"
+        android:layout_margin="10sp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/profile_picture" />
+
+    <TextView
+        android:id="@+id/name_label"
+        android:layout_toEndOf="@+id/profile_picture"
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="4dp"
+        android:textSize="16sp"
+        android:text="@string/name_label" />
+
+    <EditText
+        android:id="@+id/name_edittext"
+        android:layout_toEndOf="@+id/profile_picture"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/name_label"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="match_parent"
+        android:inputType="text"
+        android:textSize="28sp"
+        android:autofillHints="@string/name" />
+
+    <TextView
+        android:id="@+id/gender_label"
+        android:layout_toEndOf="@+id/profile_picture"
+        android:layout_below="@+id/name_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"
+        android:text="@string/gender_label" />
+
+    <Button
+        android:id="@+id/gender_button"
+        android:layout_toEndOf="@+id/profile_picture"
+        android:layout_below="@+id/gender_label"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/favorite_button"
+        android:layout_above="@+id/button_save_profile"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"/>
+
+    <Button
+        android:id="@+id/button_save_profile"
+        android:text="@string/save_profile"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/normal_button"/>
+</RelativeLayout>
