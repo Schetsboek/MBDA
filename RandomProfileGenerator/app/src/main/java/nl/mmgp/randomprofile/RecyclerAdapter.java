@@ -23,6 +23,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         this.profiles = profiles;
     }
 
+    public void setProfiles(ArrayList<Profile> profiles){
+        this.profiles = profiles;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private final TextView nameTextView;

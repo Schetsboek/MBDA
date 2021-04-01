@@ -11,24 +11,30 @@ import android.widget.TextView;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private Profile profile;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
         Intent intent = getIntent();
-        profile = (Profile) intent.getParcelableExtra("profile");
+        Profile profile = (Profile) intent.getParcelableExtra("profile");
 
-        setFragment(new ProfileDetailFragment(profile));
-
+        if (savedInstanceState == null) {
+            setFragment(new ProfileDetailFragment(), profile);
+        }
     }
 
-    public void setFragment(Fragment fragment){
+    public void setFragment(Fragment fragment, Profile profile){
         // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.profile_framelayout, fragment).commit();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("profile", profile);
+
+        fragment.setArguments(bundle);
+
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .add(R.id.profile_framelayout, fragment)
+                .commit();
     }
 
 }

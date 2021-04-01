@@ -1,5 +1,6 @@
 package nl.mmgp.randomprofile;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -18,8 +19,8 @@ public class ProfileDetailFragment extends Fragment {
 
     private Profile profile;
 
-    public ProfileDetailFragment(Profile profile) {
-        this.profile = profile;
+    public ProfileDetailFragment() {
+        super(R.layout.fragment_profile_detail);
     }
 
     @Override
@@ -37,9 +38,11 @@ public class ProfileDetailFragment extends Fragment {
 
         Button editButton = view.findViewById(R.id.button_edit_profile);
 
+        profile = (Profile) requireArguments().getParcelable("profile");
+
         if (getActivity() instanceof ProfileActivity) {
             ProfileActivity profileActivity = (ProfileActivity) this.getActivity();
-            editButton.setOnClickListener(v -> profileActivity.setFragment(new ProfileEditFragment(profile)));
+            editButton.setOnClickListener(v -> profileActivity.setFragment(new ProfileEditFragment(), profile));
         }
 
         //Name

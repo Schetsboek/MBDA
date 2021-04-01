@@ -12,10 +12,9 @@
     <string name="no_gender">Other</string>
     <string name="name_label">Hi, my name is</string>
     <string name="gender_label">I am a</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="edit_profile">Edit profile</string>
     <string name="save_profile">Save profile</string>
     <string name="favorite">Favorite</string>
     <string name="notfavorite">Not favorite</string>
+    <string name="bad_reply">Error: No response from server.</string>
 </resources>

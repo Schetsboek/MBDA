@@ -24,8 +24,8 @@ public class ProfileEditFragment extends Fragment {
     private Button favoriteButton;
     private ImageView profilePictureImageView;
 
-    public ProfileEditFragment(Profile profile) {
-        this.profile = profile;
+    public ProfileEditFragment() {
+        super(R.layout.fragment_profile_detail);
     }
 
     @Override
@@ -43,11 +43,13 @@ public class ProfileEditFragment extends Fragment {
 
         Button saveButton = view.findViewById(R.id.button_save_profile);
 
+        profile = (Profile) requireArguments().getParcelable("profile");
+
         if(getActivity() instanceof ProfileActivity) {
             ProfileActivity profileActivity = (ProfileActivity) this.getActivity();
             saveButton.setOnClickListener(v -> {
                 profile.setName(nameEditText.getText().toString());
-                profileActivity.setFragment(new ProfileDetailFragment(profile));
+                profileActivity.setFragment(new ProfileDetailFragment(), profile);
             });
         }
 
