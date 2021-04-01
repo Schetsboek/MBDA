@@ -23,4 +23,12 @@
     <string name="edit_settings">Edit settings!</string>
     <string name="settings">Settings</string>
     <string name="take_photo">Take a photo</string>
+    <string name="storage_permission_required">Storage permission is required.</string>
+    <string name="write_permission_needed">To favorite profiles, the app needs access to storage.</string>
+    <string name="read_permission_needed">To view favorite profiles, the app needs access to storage.</string>
+    <string name="favorite_functionality_broken">Favorite functionality won\'t work.</string>
+    <string name="no_camera_response">Unable to open a camera app.</string>
+    <string name="no_external_storage">No external storage installed.</string>
+    <string name="failed_to_favorite">Failed to set favorite.</string>
+    <string name="failed_to_unfavorite">Failed to unfavorite</string>
 </resources>

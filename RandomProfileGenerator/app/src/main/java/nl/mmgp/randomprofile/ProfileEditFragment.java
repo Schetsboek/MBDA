@@ -1,12 +1,19 @@
 package nl.mmgp.randomprofile;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -16,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -89,7 +97,7 @@ public class ProfileEditFragment extends Fragment {
         try {
             startActivityForResult(takePictureIntent, 1);
         } catch (ActivityNotFoundException e) {
-            // display error state to the user
+            Toast.makeText(this.getContext(), getResources().getString(R.string.no_camera_response), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -128,14 +136,63 @@ public class ProfileEditFragment extends Fragment {
     }
 
     private void switchFavorite(){
-        if(profile.isFavorite()){
-            //remove
+        checkIfPermitted();
+        if(cantRead() && cantWrite()){
+            return;
+        }
+
+        if(Util.externalStorageEnabled()){
+            if(profile.isFavorite()){
+                if(!Util.removeFromExternalStorage(profile)){
+                    Toast.makeText(this.getContext(), getResources().getString(R.string.failed_to_favorite), Toast.LENGTH_LONG).show();
+                    return;
+                }
+            } else {
+                if(!Util.addToExternalStorage(profile)){
+                    Toast.makeText(this.getContext(), getResources().getString(R.string.failed_to_unfavorite), Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
         } else {
-            //add
+            Toast.makeText(this.getContext(), getResources().getString(R.string.no_external_storage), Toast.LENGTH_LONG).show();
+            return;
         }
 
         profile.setFavorite(!profile.isFavorite());
         setFavoriteButtonStyle();
+    }
+
+    private void checkIfPermitted() {
+        ProfileEditFragment thisFragment = this;
+        if(cantWrite()){
+            AlertDialog.Builder extraInfo = new AlertDialog.Builder(thisFragment.getContext());
+            extraInfo.setTitle(getResources().getString(R.string.storage_permission_required));
+            extraInfo.setMessage(getResources().getString(R.string.write_permission_needed));
+
+            extraInfo.setPositiveButton("OK", (dialog, which) -> ActivityCompat.requestPermissions(thisFragment.getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},103));
+            extraInfo.setNegativeButton("NO", (dialog, which) -> Toast.makeText(thisFragment.getContext(), getResources().getString(R.string.favorite_functionality_broken), Toast.LENGTH_LONG).show());
+
+            extraInfo.create().show();
+        }
+
+        if(cantRead()){
+            AlertDialog.Builder extraInfo = new AlertDialog.Builder(thisFragment.getContext());
+            extraInfo.setTitle(getResources().getString(R.string.storage_permission_required));
+            extraInfo.setMessage(getResources().getString(R.string.read_permission_needed));
+
+            extraInfo.setPositiveButton("OK", (dialog, which) -> ActivityCompat.requestPermissions(thisFragment.getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},103));
+            extraInfo.setNegativeButton("NO", (dialog, which) -> Toast.makeText(thisFragment.getContext(), getResources().getString(R.string.favorite_functionality_broken), Toast.LENGTH_LONG).show());
+
+            extraInfo.create().show();
+        }
+    }
+
+    private boolean cantWrite(){
+        return ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
+    }
+
+    private boolean cantRead(){
+        return ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
     }
 
     private void setFavoriteButtonStyle(){
