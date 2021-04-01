@@ -18,9 +18,11 @@ public class MainActivity extends AppCompatActivity {
 
         Button buttonRandomProfiles = findViewById(R.id.button_random_profiles);
         Button buttonFavoriteProfiles = findViewById(R.id.button_favorite_profiles);
+        Button buttonEditSettings = findViewById(R.id.button_edit_settings);
 
         buttonRandomProfiles.setOnClickListener(v -> openRandomProfilesActivity());
-        buttonFavoriteProfiles.setOnClickListener(v -> openPreferenceActivity());
+        buttonFavoriteProfiles.setOnClickListener(v -> openFavoriteProfilesActivity());
+        buttonEditSettings.setOnClickListener(v -> openPreferenceActivity());
     }
 
     private void openRandomProfilesActivity(){

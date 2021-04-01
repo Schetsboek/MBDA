@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,5 +37,6 @@ public class ProfileActivity extends AppCompatActivity {
                 .add(R.id.profile_framelayout, fragment)
                 .commit();
     }
+
 
 }

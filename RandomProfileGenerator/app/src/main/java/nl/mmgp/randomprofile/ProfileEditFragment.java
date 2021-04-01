@@ -1,11 +1,15 @@
 package nl.mmgp.randomprofile;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +18,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.util.Random;
+
+import static android.app.Activity.RESULT_OK;
 
 public class ProfileEditFragment extends Fragment {
 
@@ -41,12 +47,18 @@ public class ProfileEditFragment extends Fragment {
         favoriteButton = view.findViewById(R.id.favorite_button);
         profilePictureImageView = view.findViewById(R.id.profile_picture);
 
+        Button photoButton = view.findViewById(R.id.photo_button);
         Button saveButton = view.findViewById(R.id.button_save_profile);
 
         profile = (Profile) requireArguments().getParcelable("profile");
 
         if(getActivity() instanceof ProfileActivity) {
             ProfileActivity profileActivity = (ProfileActivity) this.getActivity();
+
+            photoButton.setOnClickListener(v -> {
+                dispatchTakePictureIntent();
+            });
+
             saveButton.setOnClickListener(v -> {
                 profile.setName(nameEditText.getText().toString());
                 profileActivity.setFragment(new ProfileDetailFragment(), profile);
@@ -71,6 +83,26 @@ public class ProfileEditFragment extends Fragment {
 
         profilePictureImageView.setOnClickListener(v -> setRandomImage());
     }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            startActivityForResult(takePictureIntent, 1);
+        } catch (ActivityNotFoundException e) {
+            // display error state to the user
+        }
+    }
+
+    @Override
+    public  void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            profilePictureImageView.setImageBitmap(imageBitmap);
+        }
+    }
+
 
     private void switchGender(){
         if(profile.getGender() == Gender.Male){
