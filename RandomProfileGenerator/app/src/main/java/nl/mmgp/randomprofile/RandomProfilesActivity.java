@@ -1,12 +1,13 @@
 package nl.mmgp.randomprofile;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -27,12 +28,16 @@ public class RandomProfilesActivity extends AppCompatActivity {
     private RecyclerAdapter recyclerAdapter;
     private RequestQueue queue;
 
-    private final String URL = "https://randomuser.me/api/?results=20";
+    private final String URL = "https://randomuser.me/api/?results=";
+    private String generated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_random_profiles);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        generated = sharedPreferences.getString("generated", "20");
 
         recyclerView = findViewById(R.id.profile_recyclerview);
 
@@ -49,7 +54,7 @@ public class RandomProfilesActivity extends AppCompatActivity {
             updateRecyclerView();
         }
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL + generated,
                 response -> {
                     try {
                         JSONObject jsonObject = new JSONObject(response);

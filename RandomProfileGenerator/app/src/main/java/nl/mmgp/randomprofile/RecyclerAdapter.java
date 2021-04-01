@@ -88,6 +88,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         //Image
         String imageUrl = profiles.get(position).getImageUrl();
+        holder.profilePictureImageView.setImageBitmap(null);
         new LoadImageAsync(holder.profilePictureImageView).execute(imageUrl);
     }
 

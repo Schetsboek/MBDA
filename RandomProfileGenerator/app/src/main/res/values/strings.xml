@@ -17,4 +17,7 @@
     <string name="favorite">Favorite</string>
     <string name="notfavorite">Not favorite</string>
     <string name="bad_reply">Error: No response from server.</string>
+    <string name="random_profiles_generated">Random profiles generated</string>
+    <string name="server_settings">Server settings</string>
+    <string name="enter_valid_number">Please enter a valid number</string>
 </resources>
