@@ -1,6 +1,10 @@
 package nl.mmgp.randomprofile;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Environment;
+
+import androidx.core.content.ContextCompat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,6 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -24,7 +29,7 @@ public class Util {
         String state = Environment.getExternalStorageState();
         // ReadOnly check
         String extStorageState = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(state) && Environment.MEDIA_MOUNTED_READ_ONLY.equals(extStorageState);
+        return Environment.MEDIA_MOUNTED.equals(state) && Environment.MEDIA_MOUNTED.equals(extStorageState);
     }
 
     public static boolean addToExternalStorage(Profile profile){

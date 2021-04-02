@@ -137,19 +137,20 @@ public class ProfileEditFragment extends Fragment {
 
     private void switchFavorite(){
         checkIfPermitted();
-        if(cantRead() && cantWrite()){
+        if(cantRead() || cantWrite()){
             return;
         }
 
         if(Util.externalStorageEnabled()){
             if(profile.isFavorite()){
                 if(!Util.removeFromExternalStorage(profile)){
-                    Toast.makeText(this.getContext(), getResources().getString(R.string.failed_to_favorite), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this.getContext(), getResources().getString(R.string.failed_to_unfavorite), Toast.LENGTH_LONG).show();
+
                     return;
                 }
             } else {
                 if(!Util.addToExternalStorage(profile)){
-                    Toast.makeText(this.getContext(), getResources().getString(R.string.failed_to_unfavorite), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this.getContext(), getResources().getString(R.string.failed_to_favorite), Toast.LENGTH_LONG).show();
                     return;
                 }
             }
@@ -164,26 +165,15 @@ public class ProfileEditFragment extends Fragment {
 
     private void checkIfPermitted() {
         ProfileEditFragment thisFragment = this;
-        if(cantWrite()){
+        if(cantWrite()|| cantRead()){
             AlertDialog.Builder extraInfo = new AlertDialog.Builder(thisFragment.getContext());
             extraInfo.setTitle(getResources().getString(R.string.storage_permission_required));
             extraInfo.setMessage(getResources().getString(R.string.write_permission_needed));
-
-            extraInfo.setPositiveButton("OK", (dialog, which) -> ActivityCompat.requestPermissions(thisFragment.getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},103));
+            extraInfo.setPositiveButton("OK", (dialog, which) -> ActivityCompat.requestPermissions(thisFragment.getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE},1));
             extraInfo.setNegativeButton("NO", (dialog, which) -> Toast.makeText(thisFragment.getContext(), getResources().getString(R.string.favorite_functionality_broken), Toast.LENGTH_LONG).show());
 
             extraInfo.create().show();
-        }
 
-        if(cantRead()){
-            AlertDialog.Builder extraInfo = new AlertDialog.Builder(thisFragment.getContext());
-            extraInfo.setTitle(getResources().getString(R.string.storage_permission_required));
-            extraInfo.setMessage(getResources().getString(R.string.read_permission_needed));
-
-            extraInfo.setPositiveButton("OK", (dialog, which) -> ActivityCompat.requestPermissions(thisFragment.getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},103));
-            extraInfo.setNegativeButton("NO", (dialog, which) -> Toast.makeText(thisFragment.getContext(), getResources().getString(R.string.favorite_functionality_broken), Toast.LENGTH_LONG).show());
-
-            extraInfo.create().show();
         }
     }
 
