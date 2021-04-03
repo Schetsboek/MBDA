@@ -31,4 +31,7 @@
     <string name="no_external_storage">No external storage installed.</string>
     <string name="failed_to_favorite">Failed to set favorite.</string>
     <string name="failed_to_unfavorite">Failed to unfavorite</string>
+    <string name="failed_to_update_storage">Failed to update storage.\nDo you have a SD card inserted?</string>
+    <string name="no_favorites">There are no favorites!</string>
+    <string name="change_favorite_name">You can\'t edit a favorite\'s name</string>
 </resources>

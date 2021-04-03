@@ -3,9 +3,11 @@ package nl.mmgp.randomprofile;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Environment;
+import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,6 +17,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -32,77 +35,76 @@ public class Util {
         return Environment.MEDIA_MOUNTED.equals(state) && Environment.MEDIA_MOUNTED.equals(extStorageState);
     }
 
-    public static boolean addToExternalStorage(Profile profile){
-        try {
-            File sdcard = Environment.getExternalStorageDirectory();
-            File file = new File(sdcard.getAbsolutePath(), FILE_URL);
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
+    public static void addToExternalStorage(Profile profile) throws IOException, JSONException{
+        String data = readExternalStorageString();
 
-            JSONObject jsonObject= new JSONObject();
-            jsonObject.put("name", profile.getName());
-            jsonObject.put("imageUrl", profile.getImageUrl());
-            jsonObject.put("gender", profile.getGender().toString());
+        JSONObject jsonObject= new JSONObject();
+        jsonObject.put("name", profile.getName());
+        jsonObject.put("imageUrl", profile.getImageUrl());
+        jsonObject.put("gender", profile.getGender().toString());
 
-            String data = readExternalStorageString();
-            if(data.equals("")){
-                data += jsonObject.toString();
-            } else {
-                data += "," + jsonObject.toString();
-            }
-
-            fileOutputStream.write(data.getBytes());
-            fileOutputStream.close();
-            return true;
-        } catch (IOException | JSONException e) {
-            return false;
+        if(data.equals("")){
+            data += jsonObject.toString();
+        } else {
+            data += "," + jsonObject.toString();
         }
+
+        File sdcard = Environment.getExternalStorageDirectory();
+        File file = new File(sdcard.getAbsolutePath(), FILE_URL);
+
+        FileWriter fileWriter = new FileWriter(file);
+        fileWriter.write(data);
+        fileWriter.flush();
+        fileWriter.close();
     }
 
-    public static boolean removeFromExternalStorage(Profile profile){
-        try {
-            File sdcard = Environment.getExternalStorageDirectory();
-            File file = new File(sdcard.getAbsolutePath(), FILE_URL);
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
+    public static void removeFromExternalStorage(Profile profile) throws IOException, JSONException {
+        String data = readExternalStorageString();
 
-            JSONObject jsonObject= new JSONObject();
-            jsonObject.put("name", profile.getName());
-            jsonObject.put("imageUrl", profile.getImageUrl());
-            jsonObject.put("gender", profile.getGender().toString());
+        JSONObject jsonObject= new JSONObject();
+        jsonObject.put("name", profile.getName());
+        jsonObject.put("imageUrl", profile.getImageUrl());
+        jsonObject.put("gender", profile.getGender().toString());
 
-            String data = readExternalStorageString();
-            if(data.contains(jsonObject.toString())) {
-                if(data.contains(jsonObject.toString() + ",")) {
-                    data.replaceFirst(jsonObject.toString() + ",", "");
-                } else if(data.contains("," + jsonObject.toString())) {
-                    data.replaceFirst("," + jsonObject.toString(), "");
-                } else {
-                    data.replaceFirst(jsonObject.toString(), "");
-                }
-            } else {
-                return false;
+        JSONArray jsonArray = new JSONArray("["+data+"]");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject dataJSONObject = jsonArray.getJSONObject(i);
+            if (dataJSONObject.getString("name").equals(jsonObject.getString("name"))) {
+                jsonArray.remove(i);
+                break;
             }
-
-            fileOutputStream.write(data.getBytes());
-            fileOutputStream.close();
-            return true;
-        } catch (IOException | JSONException e) {
-            return false;
         }
+
+        // Remove []
+        String newFavorites = jsonArray.toString();
+        newFavorites = newFavorites.substring(1, newFavorites.length() - 1);
+
+        File sdcard = Environment.getExternalStorageDirectory();
+        File file = new File(sdcard.getAbsolutePath(), FILE_URL);
+
+        FileWriter fileWriter = new FileWriter(file);
+        fileWriter.write(newFavorites);
+        fileWriter.flush();
+        fileWriter.close();
     }
 
     public static String readExternalStorageString() throws IOException {
         File sdcard = Environment.getExternalStorageDirectory();
         File file = new File(sdcard.getAbsolutePath(), FILE_URL);
 
-        DataInputStream dataInputStream = new DataInputStream(new FileInputStream(file));
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(dataInputStream));
+        if(file.exists()){
+            StringBuilder data = new StringBuilder();
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
-        StringBuilder data = new StringBuilder();
-        String strLine;
-        while ((strLine = bufferedReader.readLine()) != null) {
-            data.append(strLine).append(",");
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                data.append(line);
+            }
+            bufferedReader.close();
+            return data.toString();
+        } else {
+            file.createNewFile();
+            return "";
         }
-        dataInputStream.close();
-        return data.toString();
     }
 }
