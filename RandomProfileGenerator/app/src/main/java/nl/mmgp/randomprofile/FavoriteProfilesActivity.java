@@ -31,6 +31,9 @@ public class FavoriteProfilesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_favorite_profiles);
 
         recyclerView = findViewById(R.id.profile_recyclerview);
+
+        profiles = new ArrayList<>();
+        setRecyclerView();
     }
 
     @Override

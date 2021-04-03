@@ -39,7 +39,11 @@ public class RandomProfilesActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         generated = sharedPreferences.getString("generated", "20");
 
+
         recyclerView = findViewById(R.id.profile_recyclerview);
+
+        profiles = new ArrayList<>();
+        setRecyclerView();
 
         queue = Volley.newRequestQueue(this);
     }
