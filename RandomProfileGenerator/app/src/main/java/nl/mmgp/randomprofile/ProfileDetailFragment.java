@@ -38,7 +38,7 @@ public class ProfileDetailFragment extends Fragment {
 
         Button editButton = view.findViewById(R.id.button_edit_profile);
 
-        profile = (Profile) requireArguments().getParcelable("profile");
+        profile = requireArguments().getParcelable("profile");
 
         if (getActivity() instanceof ProfileActivity) {
             ProfileActivity profileActivity = (ProfileActivity) this.getActivity();
