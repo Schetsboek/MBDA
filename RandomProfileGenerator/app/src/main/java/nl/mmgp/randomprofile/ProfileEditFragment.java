@@ -3,21 +3,18 @@ package nl.mmgp.randomprofile;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,9 +67,7 @@ public class ProfileEditFragment extends Fragment {
         if(getActivity() instanceof ProfileActivity) {
             ProfileActivity profileActivity = (ProfileActivity) this.getActivity();
 
-            photoButton.setOnClickListener(v -> {
-                dispatchTakePictureIntent();
-            });
+            photoButton.setOnClickListener(v -> dispatchTakePictureIntent());
 
             saveButton.setOnClickListener(v -> {
                 if(profile.isFavorite() && !nameEditText.getText().toString().equals(profile.getName())){
@@ -124,7 +119,7 @@ public class ProfileEditFragment extends Fragment {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_STORAGE_PERMISSION && grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this.getContext(), getResources().getString(R.string.favorite_functionality_broken), Toast.LENGTH_LONG).show();
         }

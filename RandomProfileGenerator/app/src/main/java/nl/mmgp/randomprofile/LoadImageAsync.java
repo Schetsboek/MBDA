@@ -1,5 +1,6 @@
 package nl.mmgp.randomprofile;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -8,7 +9,8 @@ import android.widget.ImageView;
 import java.io.InputStream;
 
 public class LoadImageAsync  extends AsyncTask<String, Void, Bitmap> {
-    private ImageView imageView;
+    @SuppressLint("StaticFieldLeak")
+    private final ImageView imageView;
 
     public LoadImageAsync(ImageView imageView) {
         this.imageView = imageView;

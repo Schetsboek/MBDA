@@ -38,6 +38,7 @@
         android:layout_width="match_parent"
         android:inputType="text"
         android:textSize="28sp"
+        android:hint="@string/name"
         android:autofillHints="@string/name" />
 
     <TextView

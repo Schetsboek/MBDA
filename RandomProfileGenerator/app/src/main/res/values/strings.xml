@@ -25,7 +25,6 @@
     <string name="take_photo">Take a photo</string>
     <string name="storage_permission_required">Storage permission is required.</string>
     <string name="write_permission_needed">To favorite profiles, the app needs access to storage.</string>
-    <string name="read_permission_needed">To view favorite profiles, the app needs access to storage.</string>
     <string name="favorite_functionality_broken">Favorite functionality won\'t work.</string>
     <string name="no_camera_response">Unable to open a camera app.</string>
     <string name="no_external_storage">No external storage installed.</string>
@@ -34,4 +33,14 @@
     <string name="failed_to_update_storage">Failed to update storage.\nDo you have a SD card inserted?</string>
     <string name="no_favorites">There are no favorites!</string>
     <string name="change_favorite_name">You can\'t edit a favorite\'s name</string>
+    <string name="role_playing_game">RPG can also stand for Role Playing Game!</string>
+    <string name="rocket_propelled_grenade">RPG can also stand for Rocket-Propelled Grenade!</string>
+    <string name="random_profile_generator">RPG can also stand for Random Profile Generator!</string>
+    <string name="bananas">Bananas are curved so they can grow towards the sun!</string>
+    <string name="hippos">A hippos sweat turns red when it gets upset!</string>
+    <string name="computer">The first computer was invented in the 1940s!</string>
+    <string name="spice">Spicy is not a taste, it is a sensation of pain!</string>
+    <string name="rene_magritte">Ceci n\'est pas une pipe!</string>
+    <string name="pizza_math">If a pizza has radius \'Z\' and height \'A\',then its volume becomes Pi*Z*Z*A!</string>
+    <string name="did_you_know">Did you know?</string>
 </resources>
